@@ -23,6 +23,7 @@
     "express": "^4.16.4",
     "next": "^7.0.2",
     "next-i18next": "../",
+    "path-match": "^1.2.4",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "winston": "^2.4.0"
