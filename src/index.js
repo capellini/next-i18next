@@ -2,7 +2,7 @@ import { withNamespaces } from 'react-i18next'
 import createConfig from './config/create-config'
 import createI18NextClient from './create-i18next-client'
 
-import { appWithTranslation, withInternals } from './hocs'
+import { appWithTranslation, createWithRouterHoc, withInternals } from './hocs'
 import { consoleMessage } from './utils'
 import { Link, Trans } from './components'
 import { wrapRouter } from './router'
@@ -27,6 +27,7 @@ export default class NextI18Next {
     this.Trans = withInternals(Trans, nextI18NextInternals)
     this.Link = withInternals(Link, nextI18NextInternals)
     this.Router = wrapRouter(nextI18NextInternals)
+    this.withRouter = createWithRouterHoc(nextI18NextInternals)
   }
 
 }

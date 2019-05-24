@@ -16,19 +16,20 @@ const propertyFields = ['pathname', 'route', 'query', 'asPath', 'components', 'e
 const coreMethods = ['reload', 'back', 'beforePopState', 'ready', 'prefetch']
 const wrappedMethods = ['push', 'replace']
 
-export default function (nextI18NextInternals) {
+export default function (nextI18NextInternals, existingRouter = null) {
   const Router = {}
+  const nextRouter = existingRouter || NextRouter
 
   propertyFields.forEach((field) => {
     Object.defineProperty(Router, field, {
       get() {
-        return NextRouter[field]
+        return nextRouter[field]
       },
     })
   })
 
   coreMethods.forEach((method) => {
-    Router[method] = (...args) => NextRouter[method](...args)
+    Router[method] = (...args) => nextRouter[method](...args)
   })
 
   wrappedMethods.forEach((method) => {
@@ -40,10 +41,10 @@ export default function (nextI18NextInternals) {
           config, { as, href: path }, i18n.languages[0],
         )
 
-        return NextRouter[method](correctedHref, correctedAs, options)
+        return nextRouter[method](correctedHref, correctedAs, options)
       }
 
-      return NextRouter[method](path, as, options)
+      return nextRouter[method](path, as, options)
     }
   })
 

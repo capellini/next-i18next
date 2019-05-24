@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { withNamespaces, Link } from '../i18n'
+import { withNamespaces, withRouter, Link } from '../i18n'
 
 class SecondPage extends React.Component {
 
@@ -12,7 +12,7 @@ class SecondPage extends React.Component {
   }
 
   render() {
-    const { t } = this.props
+    const { router, t } = this.props
     return (
       <React.Fragment>
         <h1>{t('h1')}</h1>
@@ -23,13 +23,20 @@ class SecondPage extends React.Component {
             {t('back-to-home')}
           </button>
         </Link>
+        <button type='button' onClick={() => router.replace('/')}>
+          {t('back-to-home')}
+          - withRouter
+        </button>
       </React.Fragment>
     )
   }
 }
 
 SecondPage.propTypes = {
+  router: PropTypes.shape({
+    replace: PropTypes.func.isRequired,
+  }).isRequired,
   t: PropTypes.func.isRequired,
 }
 
-export default withNamespaces('second-page')(SecondPage)
+export default withRouter(withNamespaces('second-page')(SecondPage))
